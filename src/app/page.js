@@ -1,95 +1,189 @@
+"use client"
+import React, { useState } from "react";
 import Image from "next/image";
-import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
+import styled from "styled-components"
+import val from "./assets/val.jpg"
+import susgato from "./assets/yongV2.png"
+import susgatoV2 from "./assets/yong.png"
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const Wrap = styled.div`
+    height: 100vh;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
+    position: relative;
+`
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+const Message = styled.div`
+    z-index: 1000;
+`
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+const MessageContent = styled.p`
+    margin: 0;
+    font-size: 40px;
+    color: #2178b8;
+`
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+const TextWrap = styled.div`
+    z-index: 1000;
+`
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+const Content = styled.div`
+`
+
+const WrapContent = styled.p`
+    margin: 0;
+    font-size: 20px;
+    font-family: "DM Sans", sans-serif;
+`
+
+const QuestionWrap = styled.div``
+
+const Question = styled.h1`
+    font-size: ${props => props.fontSize || "26px"};
+    font-family: "DM Sans", sans-serif;
+    font-weight: 400;
+`
+
+const ButtonWrap = styled.div`
+    display: flex;
+    gap: 20px;
+    margin-bottom: 50px;
+`
+
+const AnswerButton = styled.button`
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    border-radius: 8px;
+    border: none;
+    font-size: 20px;
+    background: #24fa24;
+    cursor: pointer;
+`
+
+const RejectButton = styled.button`
+    width: fit-content;
+    height: ${props => props.height}px;
+    border-radius: 8px;
+    border: none;
+    font-size: 20px;
+    background: #ff3030;
+    cursor: pointer;
+`
+
+const NO_RESPONSE = [
+    {
+        label: "Think again?!"
+    },
+    {
+        label: "What about now?"
+    },
+    {
+        label: "Now?"
+    },
+    {
+        label: "Pakki baat hai?"
+    },
+    {
+        label: "Aise kaise firse soch?!"
+    },
+    {
+        label: "How about now?"
+    },
+    {
+        label: "Aur ab?"
+    },
+    {
+        label: "But ab to time hogaya ab to maanja?"
+    },
+    {
+        label: "Ayuyuyuyuyuyu please?!"
+    },
+    {
+        label: "Gian ki kasam please?!"
+    },
+    {
+        label: "Monggo Maem?!"
+    },
+]
+
+const Main = () => {
+    const router = useRouter();
+    const [initial, setInitial] = useState(1)
+
+    const [view, setView] = useState(true)
+
+    const [rejectHeight, setHeight] = useState(150)
+    const [rejectWidth, setWidth] = useState(300)
+
+    const [acceptHeight, setAcceptHeight] = useState(150)
+    const [acceptWidth, setAcceptWidth] = useState(300)
+
+    const toggleSize = () => {
+        setInitial(2)
+
+        setHeight(rejectHeight / 1.1)
+        setWidth(rejectWidth / 1.1)
+
+        setAcceptHeight(acceptHeight * 1.1)
+        setAcceptWidth(acceptWidth * 1.1)
+    }
+
+    return (
+        <>
+        {view ? (
+            <Wrap>
+                <Image src={susgato} alt="yong" style={{ position: "absolute", height: "100%", width: "100%" }} />
+                <TextWrap>
+                    <Content>
+                        <WrapContent>
+                            Phool for a fool vaala joke maarke cool ban jaata hun
+                        </WrapContent>
+                    </Content>
+                    <QuestionWrap>
+                        <Question fontSize="20px">
+                            Happy Yong Return Day liloggin
+                        </Question>
+                        <Question>
+                            Will you be my yongentine?
+                        </Question>
+                    </QuestionWrap>
+                    <ButtonWrap>
+                        <AnswerButton
+                            onClick={() => setView(false)}
+                            height={acceptHeight}
+                            width={acceptWidth}
+                        >
+                            YES
+                        </AnswerButton>
+                        <RejectButton
+                            onClick={() => toggleSize()}
+                            height={rejectHeight}
+                        >
+                            {initial === 1 ? "NO" : NO_RESPONSE[Math.floor(Math.random() * NO_RESPONSE.length)].label}
+                        </RejectButton>
+                        <Image src={val} alt="val" height={200} width={200} />
+                    </ButtonWrap>
+                </TextWrap>
+            </Wrap>
+        ) : (
+            <Wrap>
+                <Image src={susgatoV2} alt="yong" style={{ position: "absolute", height: "100%", width: "100%" }} />
+                <Message>
+                    <MessageContent>
+                        WELCOME BACK YONGUUUUGUGUUGUUGUU
+                    </MessageContent>
+                </Message>
+            </Wrap>
+        )}
+        </>
+    )
 }
+
+export default Main
