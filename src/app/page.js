@@ -58,7 +58,7 @@ const Main = () => {
                 <ContentDescription
                     onClick={() => root.open("https://www.youtube.com/watch?v=bmZQpbNK7t4&ab_channel=sbritt", "_blank")}
                 >
-                    Where'd all the time go?
+                    Where&apos;d all the time go?
                 </ContentDescription>
                 <ContentDescription
                     onClick={() => root.open("https://www.youtube.com/watch?v=Jtauh8GcxBY&ab_channel=LewisCapaldiVEVO", "_blank")}
