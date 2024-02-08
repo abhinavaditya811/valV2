@@ -43,7 +43,7 @@ const Main = () => {
             <Image src={susgato} style={{ position: "absolute", height: "101%", width: "101%" }} />
             <ContentWrap>
                 <ContentHeader style={{ marginBottom: "100px" }}>
-                    Lekhak hun, badhiya likh dia ohohohoho
+                    Lekhak hun, badhiya likh dia ohohohoho (propose karde firse)
                 </ContentHeader>
                 <ContentHeader
                     onClick={() => root.open("https://www.youtube.com/watch?v=DEDjF2tLbhk&ab_channel=micfloyds", "_blank")}
