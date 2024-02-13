@@ -1,81 +1,152 @@
 "use client"
 import Image from "next/image";
-import root from "window-or-global"
 import React, { useState } from "react";
+import pookie from "./assets/pookie.jpg"
 import styled from "styled-components"
-import susgato from "./assets/susgato.png"
+import root from "window-or-global"
 
 const Wrap = styled.div`
+    position: relative;
     height: 100vh;
-    background-position: center;
+`
+
+const InputWrap = styled.div`
+    z-index: 1000;
+    position: relative;
     display: flex;
     flex-direction: column;
+    gap: 10px;
+    justify-content: center;
     align-items: center;
-    justify-content: flex-start;
     text-align: center;
-    background-size: cover;
-    position: relative;
+    height: 100%;
+
+    p {
+        margin: 0;
+        color: white;
+    }
 `
 
-const ContentWrap = styled.div`
-    z-index: 1000;
-    margin-top: 20px;
-`
-
-const ContentHeader = styled.h1`
-    margin: 0;
-    font-family: "DM Sans", sans-serif;
-    cursor: pointer;
+const Text = styled.p`
     color: white;
-`
-
-const ContentDescription = styled.p`
-    margin: 10px;
-    font-family: "DM Sans", sans-serif;
-    cursor: pointer;
-    color: cyan;
+    font-size: 20px;
 `
 
 const Main = () => {
 
+    const getQuestion = (no) => {
+        switch(no) {
+            case 1:
+                return (
+                    <>
+                        <Text>
+                            your budday?
+                        </Text>
+                        <input type="text" placeholder="mm/dd/yyyy" onChange={(e) => setBudday(e.target.value)} />
+                        <button
+                            onClick={() => handleBudday()}
+                        >
+                            enter
+                        </button>
+                    </>
+                )
+            case 2:
+                return (
+                    <>
+                        <Text>
+                            our first kiss?
+                        </Text>
+                        <input type="text" placeholder="mm/dd/yyyy" onChange={(e) => setFirst(e.target.value)} />
+                        <button
+                            onClick={() => handleKiss()}
+                        >
+                            enter
+                        </button>
+                    </>
+                )
+            case 3:
+                return (
+                    <>
+                        <Text>
+                            our anniversary?
+                        </Text>
+                        <input type="text" placeholder="mm/dd/yyyy" onChange={(e) => setAnni(e.target.value)} />
+                        <button
+                            onClick={() => handleAnni()}
+                        >
+                            enter
+                        </button>
+                    </>
+                )
+            case 4:
+                console.log("here")
+                setTimeout(() => setSike(true), 5000)
+                return (
+                    <div>
+                        {sike ? (
+                            <div>
+                                <Text>
+                                    hehehe no but fr tho, open this 
+                                    <span
+                                        style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}
+                                        onClick={() => root.open("https://photos.app.goo.gl/j1h1d7FHhKfXADmt7", "_blank")}
+                                    >here</span>
+                                </Text>
+                            </div>
+                        ) : (
+                            <Text>
+                                sike migga u thought
+                            </Text>
+                        )}
+                    </div>
+                )
+            default:
+                return (
+                    <>
+                        <button
+                            onClick={() => setQuestion(1)}
+                        >
+                            restart
+                        </button>
+                    </>
+                )
+        }
+    }
+
+    const [budday, setBudday] = useState("")
+    const [first, setFirst] = useState("")
+    const [anni, setAnni] = useState("")
+    const [sike, setSike] = useState(false)
+    const [question, setQuestion] = useState(1)
+    const handleBudday = () => {
+        if (budday === "06/30/2000") {
+            setQuestion(2)
+        } else {
+            setQuestion(-1)
+        }
+    }
+
+    const handleKiss = () => {
+        if (first === "04/19/2023") {
+            setQuestion(3)
+        } else {
+            setQuestion(-1)
+        }
+    }
+
+    const handleAnni = () => {
+        if (anni === "01/01/2024") {
+            setQuestion(4)
+        } else {
+            setQuestion(-1)
+        }
+    }
     return (
         <Wrap>
-            <Image src={susgato} style={{ position: "absolute", height: "101%", width: "101%" }} />
-            <ContentWrap>
-                <ContentHeader style={{ marginBottom: "100px" }}>
-                    Lekhak hun, badhiya likh dia ohohohoho (propose karde firse)
-                </ContentHeader>
-                <ContentHeader
-                    onClick={() => root.open("https://www.youtube.com/watch?v=DEDjF2tLbhk&ab_channel=micfloyds", "_blank")}
-                >
-                    Hey you,
-                </ContentHeader>
-                <ContentHeader
-                    onClick={() => root.open("https://www.youtube.com/watch?v=KvMY1uzSC1E&ab_channel=Netflix", "_blank")}
-                >
-                    I really want to stay at your house.
-                </ContentHeader>
-                <ContentDescription
-                    onClick={() => root.open("https://www.youtube.com/watch?v=bmZQpbNK7t4&ab_channel=sbritt", "_blank")}
-                >
-                    Whered all the time go?
-                </ContentDescription>
-                <ContentDescription
-                    onClick={() => root.open("https://www.youtube.com/watch?v=Jtauh8GcxBY&ab_channel=LewisCapaldiVEVO", "_blank")}
-                >
-                    Before you go,
-                </ContentDescription>
-                <ContentDescription
-                    onClick={() => root.open("https://www.youtube.com/watch?v=aKRMNtAdHLM&ab_channel=HarryHudsonVEVO", "_blank")}
-                >
-                    Just slide
-                </ContentDescription>
-                <ContentDescription
-                    onClick={() => root.open("https://www.youtube.com/watch?v=hEq8jBUbbWE&ab_channel=FrankOcean-Topic", "_blank")}
-                >
-                    In my room
-                </ContentDescription>
-            </ContentWrap>
+        <Image src={pookie} style={{ position: "absolute", height: "101%", width: "101%" }} />
+        <InputWrap>
+            {getQuestion(question)}
+        </InputWrap>
         </Wrap>
     )
 }
